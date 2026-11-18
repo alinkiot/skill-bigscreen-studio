@@ -12,7 +12,7 @@ import path from 'node:path';
 import os from 'node:os';
 import { fileURLToPath } from 'node:url';
 
-export const DEFAULT_REMOTE = 'https://github.com/alinkiot/screen-picture-demo.git';
+export const DEFAULT_REMOTE = 'https://github.com/zhengweixing/screen-picture-demo.git';
 export const DEFAULT_ENGINE = path.join(os.homedir(), '.bigscreen-ai', 'cache', 'bigscreen-engine');
 
 // 本地已合并引擎：engine.mjs 位于 <workspace>/skills/bigscreen-studio/scripts/，

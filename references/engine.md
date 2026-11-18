@@ -5,7 +5,7 @@
 | 项 | 默认值 | 覆盖方式 |
 | --- | --- | --- |
 | 本地引擎 | `../vizlab`（与本 skill 同处 big-screen 工作区） | **优先使用**，无需联网 |
-| 远端仓库 | `https://github.com/alinkiot/screen-picture-demo.git` | 本地引擎缺失时回退 `--remote <url>` |
+| 远端仓库 | `https://github.com/zhengweixing/screen-picture-demo.git` | 本地引擎缺失时回退 `--remote <url>` |
 | 缓存工作副本 | `~/.bigscreen-ai/cache/bigscreen-engine` | 远端克隆落点，`--engine <dir>` 或 `VIZLAB_ENGINE` |
 | 交付目录 | `./out`（当前工作目录） | `--out <dir>` |
 

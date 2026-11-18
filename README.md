@@ -27,7 +27,7 @@ preview.webp      预览图
 - Node.js 18+
 - Python 3.10+（含 Pillow），用于引擎构建
 - Playwright，用于截图自检（缺失时仍能产出 HTML，只是没有截图和自检）
-- 渲染引擎 [screen-picture-demo](https://github.com/alinkiot/screen-picture-demo)，解析优先级如下：
+- 渲染引擎 [screen-picture-demo](https://github.com/zhengweixing/screen-picture-demo)，解析优先级如下：
   1. `--engine` 参数或环境变量 `VIZLAB_ENGINE`
   2. 与本仓库同级的 `../vizlab` 目录（存在即用）
   3. `~/.bigscreen-ai/cache/bigscreen-engine`，不存在时自动 `git clone` 并安装依赖

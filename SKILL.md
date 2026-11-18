@@ -14,7 +14,7 @@ description: 对话式生成通用/商业可视化大屏（数据看板 / 3D 数
 | 项 | 位置 | 说明 |
 | --- | --- | --- |
 | 本地引擎 | `../vizlab`（与本 skill 同级的 vizlab 目录，可选） | 存在则优先使用，无需联网克隆；即 screen-picture-demo 全量副本 |
-| 远端引擎 | `https://github.com/alinkiot/screen-picture-demo.git` | 本地引擎缺失时回退，自动 `git clone --depth 1` 到 `~/.bigscreen-ai/cache/bigscreen-engine` |
+| 远端引擎 | `https://github.com/zhengweixing/screen-picture-demo.git` | 本地引擎缺失时回退，自动 `git clone --depth 1` 到 `~/.bigscreen-ai/cache/bigscreen-engine` |
 | 引擎工作副本 | `~/.bigscreen-ai/cache/bigscreen-engine` | 大屏源码写在这里（`src/screens/<id>/`）；可用 `--engine` / `VIZLAB_ENGINE` 改 |
 | 交付目录 | skill 的 `out/`（`skills/bigscreen-studio/out/`） | 每次构建自动写入，可用 `--out <dir>` 改 |
 
@@ -119,7 +119,7 @@ node ./scripts/verify.mjs --id port-ops
 
 | 现象 | 原因 | 处理 |
 | --- | --- | --- |
-| `git clone` 失败（`Authentication failed` / 403） | 默认走 HTTPS，私有仓库需要凭据 | 配好 git credential / token，或换 SSH：`--remote git@github.com:alinkiot/screen-picture-demo.git` |
+| `git clone` 失败（`Authentication failed` / 403） | 默认走 HTTPS，私有仓库需要凭据 | 配好 git credential / token，或换 SSH：`--remote git@github.com:zhengweixing/screen-picture-demo.git` |
 | `git clone` 失败（Host key verification） | 只有 SSH 地址才需要 known_hosts | 用默认的 HTTPS 地址即可；确实要走 SSH 就 `ssh-keyscan github.com >> ~/.ssh/known_hosts` |
 | `npm ci` 失败 | 网络受限 | 单文件仍会产出，只是截图自检不可用；网络恢复后进引擎目录补跑 `npm ci` |
 | 构建报 `Missing local preview` | `assets/previews/<id>.*` 不存在 | 重跑 scaffold，或先放占位 svg |

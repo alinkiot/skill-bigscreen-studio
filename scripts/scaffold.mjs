@@ -5,7 +5,7 @@
  *   node scaffold.mjs --id port-ops --preset flat --title "智慧港口运营中心"
  * 可选：--desc --label --category 3d|geo|operations --brand --brand-en --eyebrow --footer --tags a,b
  *       --engine <dir>（默认 ~/.bigscreen-ai/cache/bigscreen-engine）--remote <git url> --update --skip-deps
- * 引擎不存在时会自动 clone https://github.com/alinkiot/screen-picture-demo.git
+ * 引擎不存在时会自动 clone https://github.com/zhengweixing/screen-picture-demo.git
  */
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
