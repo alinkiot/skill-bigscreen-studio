@@ -71,16 +71,37 @@ out/<id>/<id>-report.json   自检结论（ok / errors / warnings / audit.overfl
 
 交付标准是 `ok: true` 且 `audit.overflow` 为空。数据均为演示数据，页脚会标注"演示数据 · 本地模拟"，替换 `app.js` 中的 `DATA` 即可接入真实接口。
 
-## 测试产物（实测记录）
+## 示例与效果展示
 
-以下两个大屏由本 skill 的 `scaffold → 写内容 → verify` 完整流程生成，均 `ok: true`、无控制台报错、`audit.overflow` 为空（3D 那个有 1 个 3px 的轻微溢出告警，来自引擎 park 模板，不影响交付）：
+以下两个大屏由本 skill 的 `scaffold → 写内容 → verify` 完整流程生成，均 `ok: true`、无控制台报错。每个示例给出可直接使用的提示词与 1920×1080 实拍效果图。
 
-| 目录 | 预设 | 说明 | 自检 |
-| --- | --- | --- | --- |
-| `out/ops-test-dashboard/` | flat | 智慧物流运营中心：5 KPI + 运单吞吐主趋势（日/周/月切换）+ 左右六面板 + 底部三小图 | ok，无溢出 |
-| `out/park-twin-test/` | observatory | 智慧园区数字孪生：Three.js 园区白模 + 场景点选 + 运营面板，WebGL 渲染 | ok，轻微溢出告警 |
+### 示例一 · 智慧物流运营中心（flat）
 
-每个目录含三件套：`<id>.html`（单文件大屏）、`<id>-1920.png`（1920×1080 截图）、`<id>-report.json`（自检结论）。`verify.mjs` 会自动把报告里的 home 路径脱敏成 `~/...`，可安全提交或贴文档。
+提示词（直接对 AI 说）：
+
+> 做一个智慧物流运营中心的数据大屏。指标看今日运单量、在途车辆、平均妥投时长、准时送达率、异常件；主图是运单吞吐趋势，能切今日/本周/本月；左边放区域运单排行、业务构成、分拨水位，右边放运输方式占比、实时事件、枢纽健康度；底部三个小图看分时揽收、妥投时长、运力分配。演示数据。
+
+AI 判断为 `flat` 预设（纯看数据、无物理场景），脚手架后只需改 `app.js` 的 `DATA`，生成 `out/ops-test-dashboard/`。
+
+![智慧物流运营中心](out/ops-test-dashboard/ops-test-dashboard-1920.png)
+
+效果展示：五个 KPI 卡（带迷你 sparkline）；中部运单吞吐双线趋势 + 日/周/月周期切换；左右各三块面板（排行/占比/事实、环形图/时间线/明细）；底部三个小图与滚动事件条。自检 `ok: true`，`audit.overflow` 为空。
+
+### 示例二 · 智慧园区数字孪生（observatory）
+
+提示词（直接对 AI 说）：
+
+> 做一个智慧园区数字孪生大屏，要能看到园区的三维场景，可以点选建筑看详情，配运营面板展示园区态势。演示数据。
+
+AI 判断为 `observatory` 预设（用户提到具体物理场地、希望"看到场景"），脚手架从 park 场景复制 3D 骨架，生成 `out/park-twin-test/`。
+
+![智慧园区数字孪生](out/park-twin-test/park-twin-test-1920.png)
+
+效果展示：Three.js 三维园区白模（建筑、道路、绿化）居中呈现，支持场景点选；左右运营面板展示园区指标与事件；WebGL 渲染正常（`audit.renderer=webgl`，约 29 draw calls）。自检 `ok: true`，有 1 个 3px 的轻微溢出告警，来自引擎 park 模板，不影响交付。
+
+### 产物说明
+
+每个示例目录含三件套：`<id>.html`（单文件大屏）、`<id>-1920.png`（1920×1080 截图）、`<id>-report.json`（自检结论）。`verify.mjs` 会自动把报告里的 home 路径脱敏成 `~/...`，可安全提交或贴文档。
 
 引擎依赖只需准备一次：在解析到的本地引擎目录执行 `python3 -m venv .venv && .venv/bin/pip install -r requirements.txt`、`npm ci`、`npx playwright install chromium`；`scaffold` / `verify` 会在缺少依赖时自动补齐。用 `node scripts/engine.mjs` 可查看当前实际使用的引擎路径。
 
