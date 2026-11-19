@@ -29,8 +29,9 @@ preview.webp      预览图
 - Playwright，用于截图自检（缺失时仍能产出 HTML，只是没有截图和自检）
 - 渲染引擎 [screen-picture-demo](https://github.com/zhengweixing/screen-picture-demo)，解析优先级如下：
   1. `--engine` 参数或环境变量 `VIZLAB_ENGINE`
-  2. 与本仓库同级的 `../vizlab` 目录（存在即用）
+  2. 本地引擎自动探测（取第一个含 `config/screens.json` + `scripts/build.py` 的目录）：`<skill>/../vizlab` → `<skill>/../../big-screen/vizlab` → `<skill>/../../../vizlab`
   3. `~/.bigscreen-ai/cache/bigscreen-engine`，不存在时自动 `git clone` 并安装依赖
+  - 用 `node scripts/engine.mjs` 可查看当前实际解析路径。
 
 ## 安装
 
