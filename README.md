@@ -175,7 +175,9 @@ AI 判断为 `observatory` 预设（用户提到具体物理场地、希望"看�
 
 ### 产物说明
 
-每个示例目录含三件套：`<id>.html`（单文件大屏）、`<id>-1920.png`（1920×1080 截图）、`<id>-report.json`（自检结论）。`verify.mjs` 会自动把报告里的 home 路径脱敏成 `~/...`，可安全提交或贴文档。
+由本 skill 现流程（`scaffold → verify`）生成的示例目录含三件套：`<id>.html`（单文件大屏）、`<id>-1920.png`（1920×1080 截图）、`<id>-report.json`（自检结论）。`verify.mjs` 会自动把报告里的 home 路径脱敏成 `~/...`（Windows/Linux 同样覆盖），可安全提交或贴文档。
+
+`letu-ops` 是拆分前的早期产物，未注册进引擎、无法用现流程重建，因此没有 `-report.json`，仅保留 `<id>.html` + 截图。其余示例均为完整三件套。
 
 引擎依赖只需准备一次：在解析到的本地引擎目录执行 `python3 -m venv .venv && .venv/bin/pip install -r requirements.txt`、`npm ci`、`npx playwright install chromium`；`scaffold` / `verify` 会在缺少依赖时自动补齐。用 `node scripts/engine.mjs` 可查看当前实际使用的引擎路径。
 

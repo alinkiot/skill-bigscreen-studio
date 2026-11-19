@@ -48,9 +48,15 @@ let activeBrowser = null;
 
 // SKILL.md 要求 report 里的路径不得带用户信息。写入/打印前递归脱敏 home 目录，
 // 让交付的 report.json 可以直接贴文档/提交，不泄漏本机用户名。
-const HOME_RE = new RegExp(os.homedir().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+// 用捕获组把「/Users/<名字>」「/home/<名字>」「C:\Users\<名字>」整段替换，且要求名字后是
+// 路径分隔符或结尾，避免 home 是 /Users/kenneth 时误伤 /Users/kennethX 这类前缀。
+const HOME = os.homedir().replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+const HOME_RE = new RegExp(HOME + '(?=[/\\\\]|$)', 'g');
+const USER_DIR_RE = /(\/Users\/|\/home\/|[A-Za-z]:\\Users\\)[^/\\]+(?=[/\\]|$)/g;
 function scrub(value) {
-  if (typeof value === 'string') return value.replace(HOME_RE, '~').replace(/\/Users\/[^/]+/g, '/Users/xxx');
+  if (typeof value === 'string') {
+    return value.replace(HOME_RE, '~').replace(USER_DIR_RE, '$1xxx');
+  }
   if (Array.isArray(value)) return value.map(scrub);
   if (value && typeof value === 'object') {
     const out = {};
