@@ -70,6 +70,19 @@ out/<id>/<id>-report.json   自检结论（ok / errors / warnings / audit.overfl
 
 交付标准是 `ok: true` 且 `audit.overflow` 为空。数据均为演示数据，页脚会标注"演示数据 · 本地模拟"，替换 `app.js` 中的 `DATA` 即可接入真实接口。
 
+## 测试产物（实测记录）
+
+以下两个大屏由本 skill 的 `scaffold → 写内容 → verify` 完整流程生成，均 `ok: true`、无控制台报错、`audit.overflow` 为空（3D 那个有 1 个 3px 的轻微溢出告警，来自引擎 park 模板，不影响交付）：
+
+| 目录 | 预设 | 说明 | 自检 |
+| --- | --- | --- | --- |
+| `out/ops-test-dashboard/` | flat | 智慧物流运营中心：5 KPI + 运单吞吐主趋势（日/周/月切换）+ 左右六面板 + 底部三小图 | ok，无溢出 |
+| `out/park-twin-test/` | observatory | 智慧园区数字孪生：Three.js 园区白模 + 场景点选 + 运营面板，WebGL 渲染 | ok，轻微溢出告警 |
+
+每个目录含三件套：`<id>.html`（单文件大屏）、`<id>-1920.png`（1920×1080 截图）、`<id>-report.json`（自检结论）。`verify.mjs` 会自动把报告里的 home 路径脱敏成 `~/...`，可安全提交或贴文档。
+
+引擎依赖只需准备一次：在解析到的本地引擎目录执行 `python3 -m venv .venv && .venv/bin/pip install -r requirements.txt`、`npm ci`、`npx playwright install chromium`；`scaffold` / `verify` 会在缺少依赖时自动补齐。用 `node scripts/engine.mjs` 可查看当前实际使用的引擎路径。
+
 ## 许可
 
 与原 big-screen 工作区一致，见上游仓库 LICENSE。

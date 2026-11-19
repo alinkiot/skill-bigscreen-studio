@@ -46,6 +46,20 @@ const result = { ok: false, id, out, errors: [], warnings: [], screenshots: [] }
 // 页面脚本抛错时也要能关掉浏览器：Playwright 的连接不关，进程会挂住不退出
 let activeBrowser = null;
 
+// SKILL.md 要求 report 里的路径不得带用户信息。写入/打印前递归脱敏 home 目录，
+// 让交付的 report.json 可以直接贴文档/提交，不泄漏本机用户名。
+const HOME_RE = new RegExp(os.homedir().replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+function scrub(value) {
+  if (typeof value === 'string') return value.replace(HOME_RE, '~').replace(/\/Users\/[^/]+/g, '/Users/xxx');
+  if (Array.isArray(value)) return value.map(scrub);
+  if (value && typeof value === 'object') {
+    const out = {};
+    for (const [k, v] of Object.entries(value)) out[k] = scrub(v);
+    return out;
+  }
+  return value;
+}
+
 const waitFor = async (url, timeout = 15000) => {
   const start = Date.now();
   while (Date.now() - start < timeout) {
@@ -327,15 +341,13 @@ try {
   }
   const report = path.join(out, id + '-report.json');
   result.report = report;
+  const clean = scrub({ ...result, generatedAt: new Date().toISOString() });
   try {
     mkdirSync(out, { recursive: true });
-    writeFileSync(
-      report,
-      JSON.stringify({ ...result, generatedAt: new Date().toISOString() }, null, 2) + '\n',
-    );
+    writeFileSync(report, JSON.stringify(clean, null, 2) + '\n');
   } catch {
     /* 交付目录不可写时忽略 */
   }
-  console.log(JSON.stringify(result, null, 2));
+  console.log(JSON.stringify(clean, null, 2));
   process.exitCode = result.ok ? 0 : 1;
 }

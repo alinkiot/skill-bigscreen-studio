@@ -13,15 +13,21 @@ description: 对话式生成通用/商业可视化大屏（数据看板 / 3D 数
 
 | 项 | 位置 | 说明 |
 | --- | --- | --- |
-| 本地引擎 | `../vizlab`（与本 skill 同级的 vizlab 目录，可选） | 存在则优先使用，无需联网克隆；即 screen-picture-demo 全量副本 |
+| 本地引擎 | 自动探测（见下） | 存在则优先使用，无需联网克隆；即 screen-picture-demo 全量副本 |
 | 远端引擎 | `https://github.com/zhengweixing/screen-picture-demo.git` | 本地引擎缺失时回退，自动 `git clone --depth 1` 到 `~/.bigscreen-ai/cache/bigscreen-engine` |
 | 引擎工作副本 | `~/.bigscreen-ai/cache/bigscreen-engine` | 大屏源码写在这里（`src/screens/<id>/`）；可用 `--engine` / `VIZLAB_ENGINE` 改 |
 | 交付目录 | skill 的 `out/`（`skills/bigscreen-studio/out/`） | 每次构建自动写入，可用 `--out <dir>` 改 |
 
+本地引擎按以下顺序探测，取第一个含 `config/screens.json` + `scripts/build.py` 的目录（拆分仓库后 vizlab 位置随布局变化）：
+1. `<skill>/../vizlab` —— 与本 skill 同级
+2. `<skill>/../../big-screen/vizlab` —— MyProject/skills 工作区中 vizlab 留在 big-screen 下的布局
+3. `<skill>/../../../vizlab` —— 拆分前的 `<workspace>/vizlab` 布局
+4. 都没有 → 用远端克隆缓存目录。`--engine` / `VIZLAB_ENGINE` 优先级最高。可用 `node scripts/engine.mjs` 查看当前实际解析路径。
+
 `out/` 里固定三个文件：
 
 ```text
-out/<id>/index.html          单文件大屏（依赖全内联，离线可打开，直接发给客户）
+out/<id>/<id>.html          单文件大屏（依赖全内联，离线可打开，直接发给客户）
 out/<id>/<id>-1920.png      1920×1080 截图（验收/贴文档用）
 out/<id>/<id>-report.json   自检结论（ok / errors / warnings / 面板溢出明细，路径如果有用户信息，注意用xxx代替）
 ```

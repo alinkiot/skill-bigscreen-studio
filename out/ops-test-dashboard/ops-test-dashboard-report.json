@@ -1,0 +1,34 @@
+{
+  "ok": true,
+  "id": "ops-test-dashboard",
+  "out": "~/MyProject/skills/skill-bigscreen-studio/out/ops-test-dashboard",
+  "errors": [],
+  "warnings": [],
+  "screenshots": [
+    "~/MyProject/skills/skill-bigscreen-studio/out/ops-test-dashboard/ops-test-dashboard-1920.png"
+  ],
+  "engine": "~/MyProject/skills/big-screen/vizlab",
+  "build": "Built 12 registered screens + Home (standalone) -> ~/MyProject/skills/skill-bigscreen-studio/out/ops-test-dashboard/.build",
+  "html": "~/MyProject/skills/skill-bigscreen-studio/out/ops-test-dashboard/ops-test-dashboard.html",
+  "port": 5199,
+  "audit": {
+    "title": "智慧物流运营中心",
+    "stage": {
+      "w": 1920,
+      "h": 1080,
+      "scale": 1
+    },
+    "docScroll": [
+      1920,
+      1080
+    ],
+    "canvas": 0,
+    "renderer": null,
+    "drawCalls": null,
+    "overflow": [],
+    "emptyPanels": 0,
+    "bodyText": 1208
+  },
+  "report": "~/MyProject/skills/skill-bigscreen-studio/out/ops-test-dashboard/ops-test-dashboard-report.json",
+  "generatedAt": "2026-11-19T15:54:38.357Z"
+}

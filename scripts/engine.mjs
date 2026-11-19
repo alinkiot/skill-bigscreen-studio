@@ -15,16 +15,26 @@ import { fileURLToPath } from 'node:url';
 export const DEFAULT_REMOTE = 'https://github.com/zhengweixing/screen-picture-demo.git';
 export const DEFAULT_ENGINE = path.join(os.homedir(), '.bigscreen-ai', 'cache', 'bigscreen-engine');
 
-// 本地已合并引擎：engine.mjs 位于 <workspace>/skills/bigscreen-studio/scripts/，
-// 引擎在 <workspace>/vizlab，即由此文件上溯三级再进 vizlan。
+// 本地已合并引擎候选：技能被拆成独立仓库后，vizlab 的位置随安装布局而变。
+// engine.mjs 位于 <skill>/scripts/，按出现概率依次尝试：
+//   1. <skill>/../vizlab           —— SKILL.md 记载的“与本 skill 同级”布局
+//   2. <skill>/../../big-screen/vizlab —— 本机 MyProject/skills 下的实际布局（拆仓后 vizlab 留在 big-screen 工作区）
+//   3. <skill>/../../../vizlab     —— 拆分前的原始 <workspace>/vizlab 布局
+// 取第一个通过 isEngine() 的目录；都不存在才回退到 GitHub 克隆缓存。
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-export const LOCAL_ENGINE = path.resolve(__dirname, '..', '..', '..', 'vizlab');
+export const LOCAL_ENGINE_CANDIDATES = [
+  path.resolve(__dirname, '..', '..', 'vizlab'),
+  path.resolve(__dirname, '..', '..', 'big-screen', 'vizlab'),
+  path.resolve(__dirname, '..', '..', '..', 'vizlab'),
+];
+export const LOCAL_ENGINE = LOCAL_ENGINE_CANDIDATES.find(isEngine) || LOCAL_ENGINE_CANDIDATES[0];
 
 export function enginePath(explicit) {
   if (explicit) return path.resolve(explicit);
   if (process.env.VIZLAB_ENGINE) return path.resolve(process.env.VIZLAB_ENGINE);
   // 优先用工作区内已合并的本地引擎，避免每次都去 GitHub 克隆
-  if (isEngine(LOCAL_ENGINE)) return LOCAL_ENGINE;
+  const local = LOCAL_ENGINE_CANDIDATES.find(isEngine);
+  if (local) return local;
   return DEFAULT_ENGINE;
 }
 

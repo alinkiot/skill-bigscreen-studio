@@ -1,0 +1,45 @@
+{
+  "ok": true,
+  "id": "park-twin-test",
+  "out": "~/MyProject/skills/skill-bigscreen-studio/out/park-twin-test",
+  "errors": [],
+  "warnings": [
+    "有 1 个面板内容溢出，需要压缩字号/间距或减少条目"
+  ],
+  "screenshots": [
+    "~/MyProject/skills/skill-bigscreen-studio/out/park-twin-test/park-twin-test-1920.png"
+  ],
+  "engine": "~/MyProject/skills/big-screen/vizlab",
+  "build": "Built 12 registered screens + Home (standalone) -> ~/MyProject/skills/skill-bigscreen-studio/out/park-twin-test/.build",
+  "html": "~/MyProject/skills/skill-bigscreen-studio/out/park-twin-test/park-twin-test.html",
+  "port": 5199,
+  "audit": {
+    "title": "智慧园区数字孪生",
+    "stage": null,
+    "docScroll": [
+      1920,
+      1080
+    ],
+    "canvas": 1,
+    "renderer": "webgl",
+    "drawCalls": "29",
+    "overflow": [
+      {
+        "cls": "ob-panel",
+        "title": "企业创新生态",
+        "scroll": [
+          338,
+          236
+        ],
+        "client": [
+          338,
+          233
+        ]
+      }
+    ],
+    "emptyPanels": 0,
+    "bodyText": 1117
+  },
+  "report": "~/MyProject/skills/skill-bigscreen-studio/out/park-twin-test/park-twin-test-report.json",
+  "generatedAt": "2026-11-19T15:54:47.443Z"
+}
